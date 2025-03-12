@@ -1,4 +1,5 @@
 defmodule WordSearch do
+  @spec search_file(String.t(), String.t()) :: :ok
   def search_file(file_name, word \\ "/") do
     case File.read(file_name) do
       {:ok, file_content} ->
@@ -12,6 +13,7 @@ defmodule WordSearch do
     end
   end
 
+  @spec search_file(String.t(), String.t()) :: map()
   defp search(haystack, needle) when needle != "/" do
     repetition =
       haystack
@@ -21,7 +23,8 @@ defmodule WordSearch do
     %{needle => repetition}
   end
 
-  defp search(haystack, _) do
+  @spec search_file(String.t(), String.t()) :: map()
+  defp search(haystack, _needle) do
     haystack
     |> parse_text()
     |> Enum.reduce(%{}, fn key, acc ->
@@ -29,6 +32,7 @@ defmodule WordSearch do
     end)
   end
 
+  @spec search_file(String.t()) :: list(String.t())
   defp parse_text(content) do
     content
     |> String.downcase()
