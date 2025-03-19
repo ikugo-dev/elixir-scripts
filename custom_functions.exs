@@ -20,7 +20,14 @@ defmodule CustomFunctions do
     end
   end
 
-  def map do
+  def map(array, transform, index \\ 0) do
+    if index >= length(array) do
+      []
+    else
+      remaining = map(array, transform, index + 1)
+
+      [transform.(Enum.at(array, index))] ++ remaining
+    end
   end
 
   def reduce do
@@ -30,9 +37,11 @@ end
 array = [1, 2, 3, 4, 5, 6, 7, 8]
 
 # CustomFunctions.loop(array, &IO.puts/1)
-CustomFunctions.filter(array, fn x ->
-  rem(x, 2) != 0
-end)
+# CustomFunctions.filter(array, fn x ->
+#   rem(x, 2) != 0
+# end)
+# |> IO.inspect()
+CustomFunctions.map(array, &(&1 * 2))
 |> IO.inspect()
 
 # |> IO.puts()
