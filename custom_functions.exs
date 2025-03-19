@@ -30,6 +30,16 @@ defmodule CustomFunctions do
     end
   end
 
+  def take(array, up_to, index \\ 0) do
+    if index >= length(array) || index >= up_to do
+      []
+    else
+      remaining = take(array, up_to, index + 1)
+
+      [Enum.at(array, index)] ++ remaining
+    end
+  end
+
   def reduce do
   end
 end
@@ -43,5 +53,7 @@ array = [1, 2, 3, 4, 5, 6, 7, 8]
 # |> IO.inspect()
 CustomFunctions.map(array, &(&1 * 2))
 |> IO.inspect()
+
+CustomFunctions.take(array, 3) |> IO.inspect()
 
 # |> IO.puts()
