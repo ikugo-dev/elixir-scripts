@@ -1,5 +1,12 @@
 # without indexing
 defmodule CustomFunctions2 do
+  def at(list, index) when index >= 0 do
+    case index do
+      0 -> hd(list)
+      _ -> at(tl(list), index - 1)
+    end
+  end
+
   def loop(list, fun) do
     case list do
       [] ->
@@ -56,6 +63,7 @@ defmodule CustomFunctions2 do
     end
   end
 
+  # TODO
   # def filter_reduce(list, condition, index \\ 0) do
   # end
 
@@ -68,9 +76,16 @@ end
 
 # with indexing
 defmodule CustomFunctions1 do
+  def at(list, index) when index >= 0 do
+    case index do
+      0 -> hd(list)
+      _ -> at(tl(list), index - 1)
+    end
+  end
+
   def loop(list, fun, index \\ 0) do
     if index < length(list) do
-      fun.(Enum.at(list, index))
+      fun.(at(list, index))
       loop(list, fun, index + 1)
     end
   end
@@ -81,8 +96,8 @@ defmodule CustomFunctions1 do
     else
       remaining = filter(list, condition, index + 1)
 
-      if condition.(Enum.at(list, index)) do
-        [Enum.at(list, index)] ++ remaining
+      if condition.(at(list, index)) do
+        [at(list, index)] ++ remaining
       else
         remaining
       end
@@ -95,7 +110,7 @@ defmodule CustomFunctions1 do
     else
       remaining = map(list, transform, index + 1)
 
-      [transform.(Enum.at(list, index))] ++ remaining
+      [transform.(at(list, index))] ++ remaining
     end
   end
 
@@ -105,7 +120,7 @@ defmodule CustomFunctions1 do
     else
       remaining = take(list, up_to, index + 1)
 
-      [Enum.at(list, index)] ++ remaining
+      [at(list, index)] ++ remaining
     end
   end
 
@@ -120,17 +135,8 @@ defmodule CustomFunctions1 do
     if index >= length(list) do
       []
     else
-      reverse(list, index + 1) ++ [Enum.at(list, index)]
+      reverse(list, index + 1) ++ [at(list, index)]
     end
-  end
-
-  # def filter_reduce(list, condition, index \\ 0) do
-  # end
-
-  def map_reduce(list, transform) do
-    list
-    |> reduce([], fn x, acc -> [transform.(x) | acc] end)
-    |> reverse()
   end
 end
 
