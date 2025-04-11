@@ -7,11 +7,19 @@ defmodule Reverse do
     old = Integer.floor_div(old, 10)
     new = new * 10 + digit
     number(old, new)
+
+    # number(
+    #   Integer.floor_div(old, 10),
+    #   new * 10 + Integer.mod(old, 10)
+    # )
   end
 end
 
-[arg] = System.argv()
-IO.puts(Reverse.number(String.to_integer(arg)))
+System.argv()
+|> hd()
+|> String.to_integer()
+|> Reverse.number()
+|> IO.puts()
 
 # 1234
 # 4321
