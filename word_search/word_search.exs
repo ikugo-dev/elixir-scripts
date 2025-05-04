@@ -13,7 +13,7 @@ defmodule WordSearch do
     end
   end
 
-  @spec search_file(String.t(), String.t()) :: map()
+  @spec search(String.t(), String.t()) :: map()
   defp search(haystack, needle) when needle != "/" do
     repetition =
       haystack
@@ -23,7 +23,7 @@ defmodule WordSearch do
     %{needle => repetition}
   end
 
-  @spec search_file(String.t(), String.t()) :: map()
+  @spec search(String.t(), String.t()) :: map()
   defp search(haystack, _needle) do
     haystack
     |> parse_text()
@@ -32,7 +32,7 @@ defmodule WordSearch do
     end)
   end
 
-  @spec search_file(String.t()) :: list(String.t())
+  @spec parse_text(String.t()) :: list(String.t())
   defp parse_text(content) do
     content
     |> String.downcase()
